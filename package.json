@@ -1,108 +1,89 @@
 {
-  "name": "zod-validation-error",
-  "version": "4.0.2",
-  "description": "Wrap zod validation errors in user-friendly readable messages",
-  "keywords": [
-    "zod",
-    "error",
-    "validation"
-  ],
-  "license": "MIT",
-  "repository": {
-    "type": "git",
-    "url": "git://github.com/causaly/zod-validation-error.git"
-  },
-  "author": {
-    "name": "Dimitrios C. Michalakos",
-    "email": "dimitris@jmike.gr",
-    "url": "https://github.com/jmike"
-  },
-  "contributors": [
-    {
-      "name": "Thanos Karagiannis",
-      "email": "hey@maestros.io",
-      "url": "https://github.com/thanoskrg"
+    "name": "@eslint-community/eslint-utils",
+    "version": "4.9.1",
+    "description": "Utilities for ESLint plugins.",
+    "keywords": [
+        "eslint"
+    ],
+    "homepage": "https://github.com/eslint-community/eslint-utils#readme",
+    "bugs": {
+        "url": "https://github.com/eslint-community/eslint-utils/issues"
     },
-    {
-      "name": "Nikos Tsompanides",
-      "email": "nikostsompanides@gmail.com",
-      "url": "https://github.com/NikosTsompanides"
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/eslint-community/eslint-utils"
     },
-    {
-      "name": "Nikos Kalogridis",
-      "url": "https://github.com/nikoskalogridis"
-    }
-  ],
-  "main": "./v4/index.js",
-  "module": "./v4/index.mjs",
-  "types": "./v4/index.d.ts",
-  "exports": {
-    ".": {
-      "types": "./v4/index.d.ts",
-      "require": "./v4/index.js",
-      "import": "./v4/index.mjs"
+    "license": "MIT",
+    "author": "Toru Nagashima",
+    "sideEffects": false,
+    "exports": {
+        ".": {
+            "import": "./index.mjs",
+            "require": "./index.js"
+        },
+        "./package.json": "./package.json"
     },
-    "./v3": {
-      "types": "./v3/index.d.ts",
-      "require": "./v3/index.js",
-      "import": "./v3/index.mjs"
+    "main": "index",
+    "module": "index.mjs",
+    "files": [
+        "index.*"
+    ],
+    "scripts": {
+        "prebuild": "npm run -s clean",
+        "build": "npm run build:dts && npm run build:rollup",
+        "build:dts": "tsc -p tsconfig.build.json",
+        "build:rollup": "rollup -c",
+        "clean": "rimraf .nyc_output coverage index.* dist",
+        "coverage": "opener ./coverage/lcov-report/index.html",
+        "docs:build": "vitepress build docs",
+        "docs:watch": "vitepress dev docs",
+        "format": "npm run -s format:prettier -- --write",
+        "format:prettier": "prettier .",
+        "format:check": "npm run -s format:prettier -- --check",
+        "lint:eslint": "eslint .",
+        "lint:format": "npm run -s format:check",
+        "lint:installed-check": "installed-check -v -i installed-check -i npm-run-all2 -i knip -i rollup-plugin-dts",
+        "lint:knip": "knip",
+        "lint": "run-p lint:*",
+        "test-coverage": "c8 mocha --reporter dot \"test/*.mjs\"",
+        "test": "mocha --reporter dot \"test/*.mjs\"",
+        "preversion": "npm run test-coverage && npm run -s build",
+        "postversion": "git push && git push --tags",
+        "prewatch": "npm run -s clean",
+        "watch": "warun \"{src,test}/**/*.mjs\" -- npm run -s test:mocha"
     },
-    "./v4": {
-      "types": "./v4/index.d.ts",
-      "require": "./v4/index.js",
-      "import": "./v4/index.mjs"
-    }
-  },
-  "files": [
-    "v3",
-    "v4"
-  ],
-  "publishConfig": {
-    "access": "public"
-  },
-  "sideEffects": false,
-  "engines": {
-    "node": ">=18.0.0"
-  },
-  "scripts": {
-    "typecheck": "tsc --noEmit",
-    "build": "tsup --config ./tsup.config.ts",
-    "lint": "eslint lib --ext .ts",
-    "format": "prettier --config ./.prettierrc --ignore-path .gitignore -w .",
-    "test": "vitest run",
-    "changeset": "changeset",
-    "prerelease": "npm run build && npm run test",
-    "release": "changeset publish",
-    "prepare": "husky"
-  },
-  "lint-staged": {
-    "*.{js,jsx,ts,tsx}": [
-      "eslint --fix",
-      "prettier --config ./.prettierrc.json --write"
-    ]
-  },
-  "devDependencies": {
-    "@changesets/changelog-github": "^0.5.0",
-    "@changesets/cli": "^2.27.7",
-    "@commitlint/cli": "^18.0.0",
-    "@commitlint/config-conventional": "^18.0.0",
-    "@types/node": "^20.5.0",
-    "@typescript-eslint/eslint-plugin": "^6.4.1",
-    "@typescript-eslint/parser": "^6.4.1",
-    "concurrently": "^8.2.0",
-    "eslint": "^8.4.1",
-    "eslint-config-prettier": "^9.0.0",
-    "eslint-plugin-import": "^2.29.1",
-    "eslint-plugin-prettier": "^4.2.1",
-    "husky": "^9.1.7",
-    "lint-staged": "^15.0.1",
-    "prettier": "^2.8.8",
-    "tsup": "^8.0.2",
-    "typescript": "^5.1.6",
-    "vitest": "^3.1.2",
-    "zod": "^4.0.2"
-  },
-  "peerDependencies": {
-    "zod": "^3.25.0 || ^4.0.0"
-  }
+    "dependencies": {
+        "eslint-visitor-keys": "^3.4.3"
+    },
+    "devDependencies": {
+        "@eslint-community/eslint-plugin-mysticatea": "^15.6.1",
+        "@types/eslint": "^9.6.1",
+        "@types/estree": "^1.0.7",
+        "@typescript-eslint/parser": "^5.62.0",
+        "@typescript-eslint/types": "^5.62.0",
+        "c8": "^8.0.1",
+        "dot-prop": "^7.2.0",
+        "eslint": "^8.57.1",
+        "installed-check": "^8.0.1",
+        "knip": "^5.33.3",
+        "mocha": "^9.2.2",
+        "npm-run-all2": "^6.2.3",
+        "opener": "^1.5.2",
+        "prettier": "2.8.8",
+        "rimraf": "^3.0.2",
+        "rollup": "^2.79.2",
+        "rollup-plugin-dts": "^4.2.3",
+        "rollup-plugin-sourcemaps": "^0.6.3",
+        "semver": "^7.6.3",
+        "typescript": "^4.9.5",
+        "vitepress": "^1.4.1",
+        "warun": "^1.0.0"
+    },
+    "peerDependencies": {
+        "eslint": "^6.0.0 || ^7.0.0 || >=8.0.0"
+    },
+    "engines": {
+        "node": "^12.22.0 || ^14.17.0 || >=16.0.0"
+    },
+    "funding": "https://opencollective.com/eslint"
 }
